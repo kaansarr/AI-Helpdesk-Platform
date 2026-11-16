@@ -1,101 +1,155 @@
 # AI Helpdesk Platform
 
-**AI Helpdesk Platform**, şirket içi IT destek süreçleri için geliştirdiğim; **RAG, MCP tabanlı AI Agent ve n8n otomasyonlarını** bir araya getiren bir yapay zekâ portföy projesidir.
+**AI Helpdesk Platform**, şirket içi IT destek süreçleri için geliştirdiğim; **RAG, MCP tabanlı AI Agent ve n8n otomasyonlarını** bir araya getiren yapay zekâ destekli bir portföy projesidir.
 
-Sistem, şirket dokümanlarından kaynaklı yanıtlar üretir, kullanıcı isteğine göre araç seçerek destek kayıtlarını yönetir ve belirli işlemleri kullanıcı onayıyla gerçekleştirir.
+Sistem, şirket dokümanlarından kaynaklı yanıtlar üretir, kullanıcı isteklerini analiz ederek uygun araçları çalıştırır, destek kayıtlarını yönetir ve çeşitli IT süreçlerini otomatikleştirir.
 
-## Teknolojiler
+## 🛠️ Kullanılan Teknolojiler
 
 | Alan | Teknolojiler |
 | --- | --- |
 | Backend | Python, FastAPI |
-| LLM ve embedding | Ollama, Llama 3, nomic-embed-text |
+| LLM ve Embedding | Ollama, Llama 3, nomic-embed-text |
 | RAG | PostgreSQL 16, pgvector, BAAI/bge-reranker-v2-m3 |
-| Agent ve araç kullanımı | MCP (Model Context Protocol) |
-| Otomasyon | n8n, webhook, e-posta |
-| Altyapı ve arayüz | Docker, HTML, CSS, JavaScript |
+| AI Agent ve Araç Kullanımı | MCP (Model Context Protocol) |
+| Otomasyon | n8n, Webhook, E-posta |
+| Altyapı | Docker |
+| Arayüz | HTML, CSS, JavaScript |
 
-## Temel Özellikler
+## 🚀 Temel Özellikler
 
-- **RAG ile kaynaklı soru-cevap:** Dokümanlar parçalanıp embedding'leri PostgreSQL'de saklanır. Soruyla ilgili içerikler pgvector üzerinden bulunur, reranker ile yeniden sıralanır ve LLM'e bağlam olarak verilir.
-- **MCP destekli AI Agent:** Kullanıcı isteğine göre doküman arama, kullanıcı bilgisi sorgulama ve destek kaydı oluşturma/listeleme/detay görüntüleme/durum güncelleme araçlarını seçer.
-- **Human-in-the-Loop:** Destek kaydı oluşturma veya durum değiştirme gibi işlemler kullanıcı onayından sonra gerçekleştirilir.
-- **Knowledge Gap Detection:** Yeterince ilgili kaynak bulunamayan sorular kaydedilir, tekrar sayıları takip edilir ve n8n ile bildirim gönderilir.
-- **Doküman işleme:** İçerik çıkarma, chunking, embedding oluşturma ve vektör veritabanına kaydetme adımlarını kapsar.
-- **AI destekli günlük rapor:** Destek talepleri ve bilgi eksikliği istatistikleri Python ile hesaplanır; Ollama, doğrulanan öneri seçeneklerini önceliklendirir.
+- **RAG ile Kaynaklı Soru-Cevap:** Kullanıcı sorularıyla ilgili dokümanlar pgvector üzerinden bulunur, reranker ile yeniden sıralanır ve LLM tarafından kaynaklara dayalı yanıtlar oluşturulur.
 
-## Sistem Mimarisi
+- **MCP Destekli AI Agent:** Kullanıcı isteğini analiz ederek doküman arama, kullanıcı bilgisi sorgulama, destek kaydı oluşturma, listeleme ve durum güncelleme araçlarını seçer.
+
+- **Human-in-the-Loop:** Destek kaydı oluşturma veya durum değiştirme gibi işlemler kullanıcı onayı alındıktan sonra gerçekleştirilir.
+
+- **Knowledge Gap Detection:** Bilgi tabanında yeterli kaynak bulunamayan sorular tespit edilir, veritabanına kaydedilir ve n8n üzerinden bildirim gönderilir.
+
+- **Doküman İşleme:** Dokümanlar parçalara ayrılır, embedding'leri oluşturulur ve PostgreSQL üzerinde saklanarak RAG sistemine dahil edilir.
+
+- **AI Destekli Günlük Rapor:** Günlük destek talepleri ve bilgi eksikliği istatistikleri Python ile hesaplanır. Ollama, mevcut verilere uygun önerileri seçip önceliklendirir.
+
+## 🏗️ Sistem Mimarisi
 
 ```text
-Kullanıcı → Sohbet Arayüzü → FastAPI
-                              ├── RAG → pgvector → Reranker → Ollama
-                              └── AI Agent → MCP Araçları (kullanıcı onayı)
-                                          │
-                              Repository Katmanı
-                                          │
-                               PostgreSQL 16
-                                          │
-                         FastAPI / Webhook ↔ n8n → E-posta
+                  Kullanıcı
+                      |
+                Sohbet Arayüzü
+                      |
+                    FastAPI
+                      |
+             +--------+--------+
+             |                 |
+          AI Agent         RAG Pipeline
+             |                 |
+          MCP Tools         pgvector
+             |                 |
+       Kullanıcı Onayı      Reranker
+             |                 |
+             +--------+--------+
+                      |
+               Repository Layer
+                      |
+                PostgreSQL 16
+
+                Ollama / LLM
+                      |
+                 FastAPI API
+                      |
+                 n8n Workflows
+                      |
+              E-posta Bildirimleri
 ```
 
-## n8n Otomasyonları
+## ⚙️ n8n Otomasyonları
 
-| Workflow | İşlev |
+Projede dört farklı otomasyon geliştirilmiştir.
+
+| Workflow | Açıklama |
 | --- | --- |
-| Ticket Created Notification | Oluşturulan destek kaydını e-postayla bildirir. |
-| Document Ingestion | Doküman işleme akışını tetikler. |
-| Knowledge Gap Detection | Yeni bilgi eksikliklerini e-postayla bildirir. |
-| AI Daily IT Operations Report | Günlük istatistikleri ve AI destekli önerileri e-postayla gönderir. |
+| **Ticket Created Notification** | Oluşturulan destek kayıtlarını e-postayla bildirir. |
+| **Document Ingestion** | Doküman işleme sürecini tetikler. |
+| **Knowledge Gap Detection** | Bilgi tabanında tespit edilen yeni eksiklikleri bildirir. |
+| **AI Daily IT Operations Report** | Günlük IT istatistiklerini ve AI destekli önerileri e-postayla gönderir. |
 
-## Ekran Görüntüleri
+## 📸 Ekran Görüntüleri
 
 <details>
-<summary><strong>RAG: Kaynaklı soru-cevap</strong></summary>
+<summary><strong>1. RAG — Kaynaklı Soru-Cevap</strong></summary>
 
-![RAG ile soru-cevap](screenshots/01-rag-soru-cevap.png)
+<br>
+
+![RAG ile Kaynaklı Soru-Cevap](screenshots/01-rag-soru-cevap.png)
 
 </details>
 
 <details>
-<summary><strong>MCP Agent: Kullanıcı onayı ve destek kaydı oluşturma</strong></summary>
+<summary><strong>2. MCP Agent — Kullanıcı Onayı ve Ticket Yönetimi</strong></summary>
 
-![MCP kullanıcı onayı](screenshots/02-mcp-kullanici-onayi.png)
+<br>
 
-![Destek kaydı oluşturma](screenshots/03-ticket-olusturma.png)
+**Kullanıcı onay mekanizması**
 
-![n8n ticket e-posta bildirimi](screenshots/04-n8n-ticket-email.png)
+![MCP Kullanıcı Onayı](screenshots/02-mcp-kullanici-onayi.png)
+
+**Destek kaydı oluşturma**
+
+![Destek Kaydı Oluşturma](screenshots/03-ticket-olusturma.png)
+
+**n8n üzerinden e-posta bildirimi**
+
+![Ticket E-posta Bildirimi](screenshots/04-n8n-ticket-email.png)
 
 </details>
 
 <details>
-<summary><strong>Knowledge Gap Detection</strong></summary>
+<summary><strong>3. Knowledge Gap Detection</strong></summary>
 
-![Bilgi eksikliği yanıtı](screenshots/05-knowledge-gap.png)
+<br>
 
-![Bilgi eksikliği e-posta bildirimi](screenshots/06-knowledge-gap-email.png)
+**Bilgi eksikliğinin tespit edilmesi**
+
+![Knowledge Gap Detection](screenshots/05-knowledge-gap.png)
+
+**Otomatik e-posta bildirimi**
+
+![Knowledge Gap E-posta](screenshots/06-knowledge-gap-email.png)
 
 </details>
 
 <details>
-<summary><strong>AI günlük raporu ve n8n otomasyonu</strong></summary>
+<summary><strong>4. AI Günlük Rapor ve n8n Otomasyonu</strong></summary>
 
-![AI günlük operasyon raporu](screenshots/07-ai-daily-report.png)
+<br>
 
-![n8n günlük rapor iş akışı](screenshots/08-n8n-daily-workflow.png)
+**AI destekli günlük IT operasyon raporu**
+
+![AI Günlük Rapor](screenshots/07-ai-daily-report.png)
+
+**n8n günlük rapor iş akışı**
+
+![n8n Günlük Rapor Workflow](screenshots/08-n8n-daily-workflow.png)
 
 </details>
 
-## Yerel Çalıştırma
+## 💻 Yerel Çalıştırma
 
-Python bağımlılıkları ve PostgreSQL, Ollama, n8n servisleri yapılandırıldıktan sonra:
+PostgreSQL, Ollama ve n8n servisleri yapılandırıldıktan sonra:
 
 ```bash
-cp .env.example .env
+python -m venv .venv
+source .venv/bin/activate
+
 pip install -r requirements.txt
+
+cp .env.example .env
+
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8003
 ```
 
-- **Sohbet arayüzü:** `http://localhost:8003/chat-ui`
-- **API dokümantasyonu:** `http://localhost:8003/docs`
+**Sohbet Arayüzü:** `http://localhost:8003/chat-ui`
 
-> Veritabanı şeması, modeller ve n8n workflow'ları ayrıca yapılandırılmalıdır. Bu çalışma portföy amaçlıdır; kimlik doğrulama, yetkilendirme ve üretim ortamı güvenlik gereksinimleri kapsam dışındadır.
+**Swagger API:** `http://localhost:8003/docs`
+
+> **Not:** Veritabanı şeması, Ollama modelleri ve n8n workflow'ları ayrıca yapılandırılmalıdır. Proje portföy amaçlı geliştirilmiştir. Üretim ortamına yönelik kimlik doğrulama ve yetkilendirme gibi güvenlik geliştirmeleri kapsam dışındadır.
