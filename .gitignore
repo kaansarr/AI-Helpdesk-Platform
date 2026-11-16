@@ -1,0 +1,31 @@
+# Ortam degiskenleri ve gizli bilgiler
+.env
+.env.*
+!.env.example
+
+# Python sanal ortam
+.venv/
+venv/
+
+# Python gecici dosyalari
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Veritabani yedekleri
+backups/
+
+# Kullanici tarafindan yuklenen dosyalar
+data/uploads/
+
+# Log dosyalari
+logs/
+*.log
+
+# Editor ve isletim sistemi
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+vpn_test_final.txt

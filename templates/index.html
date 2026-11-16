@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Helpdesk AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- Sol menü -->
+    <aside class="sidebar">
+        <h2>🤖 MCP Helpdesk</h2>
+
+        <button id="newChatBtn">+ Yeni Sohbet</button>
+
+        <h3>Sohbetler</h3>
+
+        <div id="chatList"></div>
+    </aside>
+
+    <!-- Sohbet alanı -->
+    <main class="chat-container">
+
+        <header class="chat-header">
+            <h2>MCP Helpdesk AI</h2>
+            <span>AI Agent • Online</span>
+        </header>
+
+        <section id="messages" class="messages">
+            <div class="welcome">
+                <h2>Merhaba! 👋</h2>
+                <p>Size nasıl yardımcı olabilirim?</p>
+            </div>
+        </section>
+
+        <form id="chatForm" class="chat-input">
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Mesajınızı yazın..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">Gönder ➤</button>
+        </form>
+
+    </main>
+
+</div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>

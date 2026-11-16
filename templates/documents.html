@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doküman Yönetimi | MCP Helpdesk</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <h2>🤖 MCP Helpdesk</h2>
+
+        <nav>
+            <a href="/chat-ui">💬 AI Agent</a>
+            <a href="/documents-ui">📁 Doküman Yönetimi</a>
+        </nav>
+    </aside>
+
+    <main class="chat-container">
+
+        <header class="chat-header">
+            <h2>📁 Doküman Yönetimi</h2>
+        </header>
+
+        <section class="document-container">
+
+            <h3>Bilgi Tabanına Doküman Ekle</h3>
+
+            <p>
+                PDF, TXT veya DOCX dosyalarını yükleyerek
+                AI Agent'ın bilgi tabanını genişletebilirsiniz.
+            </p>
+
+            <form id="uploadForm">
+
+                <input
+                    type="file"
+                    id="documentFile"
+                    accept=".pdf,.txt,.docx"
+                    required
+                >
+
+                <button type="submit" id="uploadButton">
+                    📤 Dokümanı Yükle
+                </button>
+
+            </form>
+
+            <p id="uploadStatus"></p>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="/static/js/documents.js"></script>
+
+</body>
+</html>
