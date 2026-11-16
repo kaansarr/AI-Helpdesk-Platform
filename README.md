@@ -75,63 +75,41 @@ Projede dört farklı otomasyon geliştirilmiştir.
 
 ## 📸 Ekran Görüntüleri
 
-<details>
-<summary><strong>1. RAG — Kaynaklı Soru-Cevap</strong></summary>
-
-<br>
+### 1. RAG — Kaynaklı Soru-Cevap
 
 ![RAG ile Kaynaklı Soru-Cevap](screenshots/01-rag-soru-cevap.png)
 
-</details>
-
-<details>
-<summary><strong>2. MCP Agent — Kullanıcı Onayı ve Ticket Yönetimi</strong></summary>
-
-<br>
-
-**Kullanıcı onay mekanizması**
+### 2. MCP Agent — Kullanıcı Onayı
 
 ![MCP Kullanıcı Onayı](screenshots/02-mcp-kullanici-onayi.png)
 
-**Destek kaydı oluşturma**
+### 3. Destek Kaydı Oluşturma
 
 ![Destek Kaydı Oluşturma](screenshots/03-ticket-olusturma.png)
 
-**n8n üzerinden e-posta bildirimi**
+### 4. n8n Ticket Bildirimi
 
 ![Ticket E-posta Bildirimi](screenshots/04-n8n-ticket-email.png)
 
-</details>
-
-<details>
-<summary><strong>3. Knowledge Gap Detection</strong></summary>
-
-<br>
-
-**Bilgi eksikliğinin tespit edilmesi**
+### 5. Knowledge Gap Detection
 
 ![Knowledge Gap Detection](screenshots/05-knowledge-gap.png)
 
-**Otomatik e-posta bildirimi**
+### 6. Knowledge Gap E-posta Bildirimi
 
 ![Knowledge Gap E-posta](screenshots/06-knowledge-gap-email.png)
 
-</details>
-
-<details>
-<summary><strong>4. AI Günlük Rapor ve n8n Otomasyonu</strong></summary>
-
-<br>
-
-**AI destekli günlük IT operasyon raporu**
+### 7. AI Günlük Operasyon Raporu
 
 ![AI Günlük Rapor](screenshots/07-ai-daily-report.png)
 
-**n8n günlük rapor iş akışı**
+### 8. n8n Günlük Rapor Otomasyonu
 
-![n8n Günlük Rapor Workflow](screenshots/08-n8n-daily-workflow.png)
+![n8n Günlük Rapor](screenshots/08-n8n-daily-workflow.png)
 
-</details>
+### 9. n8n Otomasyon Mimarisi
+
+![n8n Workflow Mimarisi](screenshots/n8n.png)
 
 ## 💻 Yerel Çalıştırma
 
